@@ -2,19 +2,16 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=1.0, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Contact</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <h1>問い合わせフォーム</h1>
   <form id="contactForm">
-    <label for="name">【任意】Twitter ID</label>
-    <input type="text" id="name" name="name">
-    
+    <p>【注意】回答した内容は第三者からの閲覧が可能となっております．そのため，個人を特定できる内容や情報を回答をしないようにお願いします．</p>
     <label for="message">【必須】問い合わせ内容</label>
-    <input type="text" id="message" name="message" required>
-    
+    <textarea id="message" name="message" class="input-height" required></textarea>
     <input type="submit" value="送信">
   </form>
   
@@ -22,7 +19,6 @@
   <div id="confirmationDialog" class="modal" style="display: none;">
     <div class="modal-content">
       <h2>入力内容の確認</h2>
-      <p><strong>名前:</strong> <span id="confirmName"></span></p>
       <p><strong>メッセージ:</strong> <span id="confirmMessage"></span></p>
       <button id="confirmButton">確認して送信</button>
       <button id="editButton">編集する</button>
@@ -37,11 +33,9 @@
       event.preventDefault();
       
       // フォームの入力値を取得
-      let name = document.getElementById('name').value;
       let message = document.getElementById('message').value;
       
       // 確認ダイアログに入力値を表示
-      document.getElementById('confirmName').textContent = name;
       document.getElementById('confirmMessage').textContent = message;
       
       // 確認ダイアログを表示
@@ -50,11 +44,10 @@
     
     // 確認して送信ボタンのクリックイベント
     document.getElementById('confirmButton').addEventListener('click', function() {
-      let name = document.getElementById('name').value;
       let message = document.getElementById('message').value;
       
       let contacts = JSON.parse(localStorage.getItem('contacts')) || [];
-      contacts.push({ name, message });
+      contacts.push({ message });
       localStorage.setItem('contacts', JSON.stringify(contacts));
       
       // 確認ダイアログを非表示にして確認メッセージを表示
