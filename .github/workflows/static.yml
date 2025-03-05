@@ -23,12 +23,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
+
+      - name: Install TeX Live
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y texlive-full latexmk
+
+      - name: Compile LaTeX document
+        run: |
+          latexmk -pdf -interaction=nonstopmode main.tex
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: '.'  # Adjust the path to your desired directory
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
