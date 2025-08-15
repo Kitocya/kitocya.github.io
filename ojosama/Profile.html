@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>メンバープロファイル</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', 'Hiragino Sans', 'Yu Gothic', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            text-align: center;
+            color: white;
+            font-size: 2.5em;
+            margin-bottom: 40px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .profiles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            padding: 20px 0;
+        }
+        
+        .profile-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .profile-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+        }
+        
+        .profile-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+        }
+        
+        .profile-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-size: 24px;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+        
+        .name {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .department {
+            color: #667eea;
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+        
+        .profile-info {
+            margin-top: 20px;
+        }
+        
+        .info-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 12px;
+            padding: 8px 0;
+        }
+        
+        .info-label {
+            font-weight: 600;
+            color: #555;
+            min-width: 70px;
+            font-size: 0.9em;
+        }
+        
+        .info-value {
+            color: #333;
+            flex: 1;
+            line-height: 1.4;
+        }
+        
+        .quote {
+            background: #f8f9ff;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 0 10px 10px 0;
+            font-style: italic;
+            color: #555;
+            line-height: 1.5;
+        }
+        
+        .year-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+        
+        @media (max-width: 768px) {
+            .profiles-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            h1 {
+                font-size: 2em;
+                margin-bottom: 30px;
+            }
+            
+            .profile-card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📚 メンバープロファイル</h1>
+        
+        <div class="profiles-grid">
+            <!-- Member 1 -->
+            <div class="profile-card">
+                <div class="profile-header">
+                    <div class="avatar">田</div>
+                    <div class="name">田中 健太</div>
+                    <div class="department">情報工学科<span class="year-badge">3年</span></div>
+                </div>
+                <div class="profile-info">
+                    <div class="info-item">
+                        <span class="info-label">学年:</span>
+                        <span class="info-value">3年生</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">好きなもの:</span>
+                        <span class="info-value">プログラミング、ゲーム開発、ラーメン</span>
+                    </div>
+                </div>
+                <div class="quote">
+                    コードを書いている時間が一番楽しいです！新しい技術を学ぶのが好きで、いつかオリジナルゲームを作りたいと思っています。
+                </div>
+            </div>
+
+            <!-- Member 2 -->
+            <div class="profile-card">
+                <div class="profile-header">
+                    <div class="avatar">佐</div>
+                    <div class="name">佐藤 美咲</div>
+                    <div class="department">デザイン学科<span class="year-badge">2年</span></div>
+                </div>
+                <div class="profile-info">
+                    <div class="info-item">
+                        <span class="info-label">学年:</span>
+                        <span class="info-value">2年生</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">好きなもの:</span>
+                        <span class="info-value">イラスト、カフェ巡り、映画鑑賞</span>
+                    </div>
+                </div>
+                <div class="quote">
+                    デザインを通じて人の心を動かせる作品を作りたいです。最近はUI/UXデザインにも興味があります！
+                </div>
+            </div>
+
+            <!-- Member 3 -->
+            <div class="profile-card">
+                <div class="profile-header">
+                    <div class="avatar">鈴</div>
+                    <div class="name">鈴木 大輔</div>
+                    <div class="department">機械工学科<span class="year-badge">4年</span></div>
+                </div>
+                <div class="profile-info">
+                    <div class="info-item">
+                        <span class="info-label">学年:</span>
+                        <span class="info-value">4年生</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">好きなもの:</span>
+                        <span class="info-value">ロボット工学、バスケットボール、読書</span>
+                    </div>
+                </div>
+                <div class="quote">
+                    卒業研究でロボットアームの制御システムを開発中です。将来は人の役に立つロボットを作りたいです。
+                </div>
+            </div>
+
+            <!-- Member 4 -->
+            <div class="profile-card">
+                <div class="profile-header">
+                    <div class="avatar">高</div>
+                    <div class="name">高橋 愛子</div>
+                    <div class="department">心理学科<span class="year-badge">1年</span></div>
+                </div>
+                <div class="profile-info">
+                    <div class="info-item">
+                        <span class="info-label">学年:</span>
+                        <span class="info-value">1年生</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">好きなもの:</span>
+                        <span class="info-value">音楽、ピアノ、動物との触れ合い</span>
+                    </div>
+                </div>
+                <div class="quote">
+                    人の心について学ぶのがとても興味深いです。将来はカウンセラーになって、みんなの支えになりたいです。
+                </div>
+            </div>
+
+            <!-- Member 5 -->
+            <div class="profile-card">
+                <div class="profile-header">
+                    <div class="avatar">山</div>
+                    <div class="name">山田 翔太</div>
+                    <div class="department">経済学科<span class="year-badge">3年</span></div>
+                </div>
+                <div class="profile-info">
+                    <div class="info-item">
+                        <span class="info-label">学年:</span>
+                        <span class="info-value">3年生</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">好きなもの:</span>
+                        <span class="info-value">株式投資、テニス、旅行</span>
+                    </div>
+                </div>
+                <div class="quote">
+                    経済の動きを分析するのが好きです。将来は金融業界で働いて、経済発展に貢献したいと思っています。
+                </div>
+            </div>
+
+            <!-- Member 6 -->
+            <div class="profile-card">
+                <div class="profile-header">
+                    <div class="avatar">中</div>
+                    <div class="name">中村 優花</div>
+                    <div class="department">国際関係学科<span class="year-badge">2年</span></div>
+                </div>
+                <div class="profile-info">
+                    <div class="info-item">
+                        <span class="info-label">学年:</span>
+                        <span class="info-value">2年生</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">好きなもの:</span>
+                        <span class="info-value">語学学習、世界料理、ボランティア活動</span>
+                    </div>
+                </div>
+                <div class="quote">
+                    世界中の人たちとつながりたいです。現在5か国語を勉強中で、将来は国際機関で働きたいと思っています。
+                </div>
+            </div>
+
+            <!-- Member 7 -->
+            <div class="profile-card">
+                <div class="profile-header">
+                    <div class="avatar">小</div>
+                    <div class="name">小林 拓海</div>
+                    <div class="department">建築学科<span class="year-badge">4年</span></div>
+                </div>
+                <div class="profile-info">
+                    <div class="info-item">
+                        <span class="info-label">学年:</span>
+                        <span class="info-value">4年生</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">好きなもの:</span>
+                        <span class="info-value">建築デザイン、写真撮影、散歩</span>
+                    </div>
+                </div>
+                <div class="quote">
+                    人と環境に優しい建築を設計したいです。美しさと機能性を両立した空間づくりを目指しています。
+                </div>
+            </div>
+
+            <!-- Member 8 -->
+            <div class="profile-card">
+                <div class="profile-header">
+                    <div class="avatar">加</div>
+                    <div class="name">加藤 千春</div>
+                    <div class="department">薬学科<span class="year-badge">1年</span></div>
+                </div>
+                <div class="profile-info">
+                    <div class="info-item">
+                        <span class="info-label">学年:</span>
+                        <span class="info-value">1年生</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">好きなもの:</span>
+                        <span class="info-value">化学実験、お菓子作り、ガーデニング</span>
+                    </div>
+                </div>
+                <div class="quote">
+                    薬を通じて多くの人を助けたいです。特に新薬開発に興味があり、日々勉強に励んでいます。
+                </div>
+            </div>
+
+            <!-- Member 9 -->
+            <div class="profile-card">
+                <div class="profile-header">
+                    <div class="avatar">吉</div>
+                    <div class="name">吉田 隆志</div>
+                    <div class="department">物理学科<span class="year-badge">3年</span></div>
+                </div>
+                <div class="profile-info">
+                    <div class="info-item">
+                        <span class="info-label">学年:</span>
+                        <span class="info-value">3年生</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">好きなもの:</span>
+                        <span class="info-value">宇宙物理学、天体観測、SF映画</span>
+                    </div>
+                </div>
+                <div class="quote">
+                    宇宙の謎を解き明かしたいです。ブラックホールの研究に特に興味があり、将来は研究者を目指しています。
+                </div>
+            </div>
+
+            <!-- Member 10 -->
+            <div class="profile-card">
+                <div class="profile-header">
+                    <div class="avatar">松</div>
+                    <div class="name">松本 彩香</div>
+                    <div class="department">教育学科<span class="year-badge">2年</span></div>
+                </div>
+                <div class="profile-info">
+                    <div class="info-item">
+                        <span class="info-label">学年:</span>
+                        <span class="info-value">2年生</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">好きなもの:</span>
+                        <span class="info-value">子どもとの交流、読み聞かせ、料理</span>
+                    </div>
+                </div>
+                <div class="quote">
+                    子どもたちの成長を支えられる先生になりたいです。一人ひとりの個性を大切にした教育を心がけたいと思います。
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
