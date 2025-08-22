@@ -174,7 +174,7 @@ h1::before {
 }
 
 /* スマホ対応 */
-@media (max-width: 600px) {
+@media (max-width: 500px) {
   body {
     padding: 10px;
     overflow-x: hidden;
