@@ -180,10 +180,10 @@ h2::before {
 }
 
 .lesson-description {
-    font-size: 0.95rem;
-    opacity: 0.9;
-    line-height: 1.5;
+    font-size: 0.9rem;
+    opacity: 0.8;
     font-weight: 300;
+    letter-spacing: 0.5px;
 }
 
 /* コメントアウトされたアイテム用のスタイル */
