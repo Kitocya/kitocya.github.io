@@ -184,7 +184,6 @@ h2::before {
     opacity: 0.8;
     font-weight: 300;
     letter-spacing: 0.5px;
-    text-align: left;
 }
 
 /* コメントアウトされたアイテム用のスタイル */
