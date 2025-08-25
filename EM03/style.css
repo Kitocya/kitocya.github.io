@@ -144,6 +144,25 @@ h1::before {
     transform: translateX(5px);
 }
 
+.document-card a:link {
+    color: blue;
+    text-decoration: underline;
+}
+
+.document-card a:visited {
+    color: purple;
+    text-decoration: underline;
+}
+
+.document-card a:hover {
+    color: #005B99;
+    text-decoration: underline;
+}
+
+.document-card a:active {
+    color: red;
+}
+
 /* 各カードに異なるアイコンを設定 */
 .document-card:nth-child(1) .document-icon::before {
     content: '📄';
