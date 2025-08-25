@@ -53,6 +53,14 @@ h1::before {
     vertical-align: middle;
 }
 
+.document-card a:link {
+    color: blue !important; /* 明るい青 */
+}
+
+.document-card a:visited {
+    color: blueviolet !important; /* 明るい紫 */
+}
+
 .document-grid {
     display: flex;
     flex-direction: column;
