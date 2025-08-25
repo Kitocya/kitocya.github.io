@@ -144,6 +144,14 @@ h1::before {
     transform: translateX(5px);
 }
 
+.document-card a:link {
+    color: blue !important; /* 明るい青 */
+}
+
+.document-card a:visited {
+    color: blueviolet !important; /* 明るい紫 */
+}
+
 /* 各カードに異なるアイコンを設定 */
 .document-card:nth-child(1) .document-icon::before {
     content: '📄';

@@ -186,6 +186,14 @@ h2::before {
     letter-spacing: 0.5px;
 }
 
+.document-card a:link {
+    color: blue !important; /* 明るい青 */
+}
+
+.document-card a:visited {
+    color: blueviolet !important; /* 明るい紫 */
+}
+
 /* コメントアウトされたアイテム用のスタイル */
 .lesson-card.disabled {
     opacity: 0.5;
