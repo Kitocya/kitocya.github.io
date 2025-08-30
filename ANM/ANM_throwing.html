@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>斜方投射アニメーション</title>
+    <title>投射アニメーション</title>
     <style>
         body {
             margin: 0;
@@ -123,6 +123,12 @@
         .view-button.active {
             background: linear-gradient(45deg, #4ecdc4, #44a08d);
         }
+        
+        .strobe-control {
+            border-top: 1px solid #333;
+            padding-top: 10px;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
@@ -162,6 +168,19 @@
             <div class="toggle-group">
                 <button onclick="toggleTrajectory()" id="trajectoryBtn" class="small-button active">軌道表示</button>
             </div>
+            
+            <div class="strobe-control">
+                <h5 style="margin: 0 0 8px 0;">ストロボ機能</h5>
+                <div class="toggle-group">
+                    <button onclick="toggleStrobe()" id="strobeBtn" class="small-button">ストロボON</button>
+                    <button onclick="clearStrobe()" class="small-button">クリア</button>
+                </div>
+                <div class="control-group">
+                    <label>間隔 (秒)</label>
+                    <input type="range" id="strobeInterval" min="0.1" max="1" value="0.2" step="0.1">
+                    <div class="value-display"><span id="strobeIntervalValue">0.2</span>s</div>
+                </div>
+            </div>
         </div>
         
         <div id="info">
@@ -198,13 +217,19 @@
         let projectionLines = [];
         let horizontalProjection, verticalProjection;
         
+        // ストロボ関連変数
+        let strobeEnabled = false;
+        let strobeInterval = 0.2;
+        let lastStrobeTime = 0;
+        let strobeSpheres = [];
+        
         // 物理パラメータ
         let initialVelocity = 25;
         let launchAngle = 45;
         let gravity = 9.8;
         let scale = 2;
         let zoomLevel = 50;
-        let baseDistance = 50;
+        let baseDistance = 80;
         let buildingHeight = 20;
         
         // アニメーション変数
@@ -240,8 +265,8 @@
             directionalLight.shadow.mapSize.height = 2048;
             scene.add(directionalLight);
             
-            // 地面作成
-            const groundGeometry = new THREE.PlaneGeometry(200, 100);
+            // 地面作成（拡大）
+            const groundGeometry = new THREE.PlaneGeometry(400, 200);
             const groundMaterial = new THREE.MeshLambertMaterial({ 
                 color: 0x90EE90,
                 transparent: true,
@@ -252,8 +277,8 @@
             ground.receiveShadow = true;
             scene.add(ground);
             
-            // グリッド表示
-            const gridHelper = new THREE.GridHelper(200, 20, 0x000000, 0x000000);
+            // グリッド表示（拡大）
+            const gridHelper = new THREE.GridHelper(400, 40, 0x000000, 0x000000);
             gridHelper.material.opacity = 0.2;
             gridHelper.material.transparent = true;
             scene.add(gridHelper);
@@ -261,11 +286,12 @@
             // ビル作成
             createBuilding();
             
-            // 投射体作成
-            const projectileGeometry = new THREE.SphereGeometry(1, 16, 16);
+            // 投射体作成（より詳細な球体に変更）
+            const projectileGeometry = new THREE.SphereGeometry(1, 32, 32); // セグメント数を増加
             const projectileMaterial = new THREE.MeshPhongMaterial({ 
                 color: 0xff4444,
-                shininess: 100
+                shininess: 100,
+                specular: 0x111111
             });
             projectile = new THREE.Mesh(projectileGeometry, projectileMaterial);
             projectile.castShadow = true;
@@ -298,13 +324,7 @@
             building.name = 'building';
             scene.add(building);
             
-            // ビル屋上の目印
-            const rooftopGeometry = new THREE.CylinderGeometry(0.5, 1, 2, 8);
-            const rooftopMaterial = new THREE.MeshPhongMaterial({ color: 0xff6666 });
-            const rooftop = new THREE.Mesh(rooftopGeometry, rooftopMaterial);
-            rooftop.position.set(-50, buildingHeight * scale + 1, 0);
-            rooftop.name = 'rooftop';
-            scene.add(rooftop);
+
         }
         
         function updateBuilding() {
@@ -389,8 +409,8 @@
                     removeProjectionLines();
                     break;
                 default: // 3d
-                    camera.position.set(0, 20, distance);
-                    camera.lookAt(0, 10, 0);
+                    camera.position.set(0, 40, distance);
+                    camera.lookAt(0, 20, 0);
                     removeProjectionLines();
             }
         }
@@ -485,6 +505,43 @@
             scene.add(trajectoryLine);
         }
         
+        // ストロボ機能
+        function toggleStrobe() {
+            strobeEnabled = !strobeEnabled;
+            const btn = document.getElementById('strobeBtn');
+            
+            if (strobeEnabled) {
+                btn.classList.add('active');
+                btn.textContent = 'ストロボOFF';
+            } else {
+                btn.classList.remove('active');
+                btn.textContent = 'ストロボON';
+            }
+        }
+        
+        function clearStrobe() {
+            // 既存のストロボ球体をすべて削除
+            strobeSpheres.forEach(sphere => {
+                scene.remove(sphere);
+                sphere.geometry.dispose();
+                sphere.material.dispose();
+            });
+            strobeSpheres = [];
+        }
+        
+        function createStrobeSphere(x, y, z) {
+            const sphereGeometry = new THREE.SphereGeometry(0.8, 16, 16);
+            const sphereMaterial = new THREE.MeshPhongMaterial({ 
+                color: 0xff4444,
+                transparent: true,
+                opacity: 0.4
+            });
+            const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+            sphere.position.set(x, y, z);
+            scene.add(sphere);
+            strobeSpheres.push(sphere);
+        }
+        
         function calculateTrajectory() {
             const radianAngle = (launchAngle * Math.PI) / 180;
             const vx = initialVelocity * Math.cos(radianAngle);
@@ -549,9 +606,13 @@
         function startAnimation() {
             if (isAnimating) return;
             
+            // ストロボ球体をクリア
+            clearStrobe();
+            
             isAnimating = true;
             startTime = Date.now();
             currentTime = 0;
+            lastStrobeTime = 0;
             
             // 投射体を初期位置に
             projectile.position.set(-50, buildingHeight * scale, 0);
@@ -572,6 +633,12 @@
             // 位置計算
             const x = -50 + vx * currentTime * scale;
             const y = (buildingHeight + vy * currentTime - 0.5 * gravity * currentTime * currentTime) * scale;
+            
+            // ストロボ機能
+            if (strobeEnabled && currentTime - lastStrobeTime >= strobeInterval) {
+                createStrobeSphere(x, Math.max(y, 0), 0);
+                lastStrobeTime = currentTime;
+            }
             
             // 地面に着地したかチェック
             if (y <= 0 && currentTime > 0.1) {
@@ -607,6 +674,7 @@
         function resetAnimation() {
             isAnimating = false;
             currentTime = 0;
+            clearStrobe();
             resetProjectilePosition();
         }
         
@@ -683,6 +751,12 @@
                 zoomLevel = parseFloat(e.target.value);
                 document.getElementById('zoomValue').textContent = zoomLevel;
                 updateCameraPosition();
+            });
+            
+            // ストロボ間隔スライダー
+            document.getElementById('strobeInterval').addEventListener('input', function(e) {
+                strobeInterval = parseFloat(e.target.value);
+                document.getElementById('strobeIntervalValue').textContent = strobeInterval;
             });
             
             // ウィンドウリサイズ
