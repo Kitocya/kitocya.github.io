@@ -1,0 +1,118 @@
+\documentclass[a4paper,11pt]{ltjsarticle}
+\usepackage{amsmath, mathtools, amssymb, bm, fancyhdr, anyfontsize, subcaption, multirow, wrapfig, graphicx, hyperref, url, enumitem, ascmac, tikz, tikz-3dplot}
+\usetikzlibrary{arrows, angles, quotes}
+
+\hypersetup{
+setpagesize=false,
+ bookmarksnumbered=true,
+ bookmarksopen=true,
+ colorlinks=true,
+ linkcolor=blue,
+ citecolor=black,
+ urlcolor=blue,
+}
+
+\newcommand{\dlim}[2]{\displaystyle{\lim_{#1 \to #2}\:}}
+\newcommand{\dint}[2]{\displaystyle{\int_{#1}^{#2}}}
+\def\tick#1#2{\draw[thick] (#1)++(#2:0.12) --++ (#2-180:0.24)}
+\def\N{100} % number of samples
+
+\title{高校物理学の解説}
+\author{ほうじ茶}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+  本資料は，高校物理学の解説資料です．高校では，\textbf{微分積分を用いないで}物理基礎や物理を習う．
+  その微分積分で得られるの結論を公式として諳記して，問題を解いている．ただし，微分積分なしに物理の問題を解くことは本質的ではない．
+  
+  しかしながら，本質を1から丁寧に解説資料している資料がほぼ無いに等しい．そのため，本資料を作成することにした．
+  以下に記載している\textbf{留意事項}をよく読んでからご利用ください．
+\end{abstract}
+
+\tableofcontents
+
+\vspace{12pt}
+
+\begin{center}
+  {\color{blue}青文字}をクリックすると，対応したページに遷移します．
+\end{center}
+
+\section*{留意事項}
+
+\begin{enumerate}
+  \item 色付き文字やハイライトは重要事項または分かりやすくしたい箇所です．
+  \item 定期試験は過去問からほぼ同等の問題が出るため，過去問を完璧にすることを推奨します．
+  \item 本資料の著作権は，\href{https://creativecommons.org/licenses/by-nc-sa/4.0}{CC BY-NC-SA 4.0}を適応します．
+\end{enumerate}
+
+\clearpage
+
+\part{電磁気}
+
+\section{電気はスカラー，磁気はベクトル}
+
+スカラーとベクトルの違いは，力学でも扱った．スカラーは\textbf{1つの数}であり，ベクトルは\textbf{2つ以上の数を束ねたもの}であった．
+そして，スカラーはそのままでいいが，ベクトルは\textbf{太字}または\textbf{2重文字}で表現する．
+よく，スカラーは大きさ\textbf{だけ}持つ量で，ベクトルは大きさと\textbf{向きも}持つ量と理解している人も多い．\colorbox{yellow}{それは何故か？}
+
+\begin{figure}[htbp]
+\centering
+\begin{minipage}[b]{0.49\columnwidth}
+    \centering
+    \begin{equation*}
+      A = 2
+    \end{equation*}
+    \caption{スカラー}
+\end{minipage}
+\begin{minipage}[b]{0.49\columnwidth}
+    \centering
+    \begin{equation*}
+      \bm{B} = (2 \qquad 1 \qquad 3)
+    \end{equation*}
+    \caption{ベクトル}
+\end{minipage}
+\end{figure}
+
+スカラーのイメージは，\textbf{1次元}である．すなわち，$x$軸だけの数直線を考えると単なる\textbf{大きさ}にすぎない．
+次にベクトルのイメージは，\textbf{2次元}や\textbf{3次元}である．$x$軸だけでは，大きさしか表せなかったのに対し，
+数を束にすることで\textbf{2つ目以降の数によって方向が決まる}．
+
+\begin{figure}[htbp]
+\centering
+\begin{minipage}[b]{0.49\columnwidth}
+    \centering
+    \begin{tikzpicture}
+      \draw[-latex] (-3,0) -- (3,0) node[right]{$x$};
+      \foreach \x in {-2,...,2} \draw (\x,0.2)--(\x,0) node[below] {$\x$};
+      \draw[->, very thick, cyan] (0,1) -- (2,1);
+      \draw[dashed] (0,0) -- (0,1);
+      \draw[dashed] (2,0) -- (2,1);
+    \end{tikzpicture}
+    \caption{スカラー}
+\end{minipage}
+\begin{minipage}[b]{0.49\columnwidth}
+    \centering
+    \begin{tikzpicture}
+      \draw[-latex] (0,0,0) -- (4,0,0) node[right]{$x$};
+      \foreach \x in {1,...,3} \draw (\x,0.2,0)--(\x,0,0) node[below] {$\x$};
+      \draw[-latex] (0,0,0) -- (0,4,0) node[above]{$z$};
+      \foreach \z in {0,...,3} \draw (0.2,\z,0)--(0,\z,0) node[left] {$\z$};
+      \draw[-latex] (0,0,0) -- (0,0,4) node[below]{$y$};
+      \foreach \y in {1,...,3} \draw (0.2,0,\y)--(0,0,\y) node[above left] {$\y$};
+      \draw[->, very thick, cyan] (0,0,0) -- (2,3,1);
+      \draw[dashed] (2,0,0) -- (2,0,1) -- (0,0,1);
+      \draw[dashed] (2,3,0) -- (2,3,1) -- (0,3,1) -- (0,3,0) --cycle;
+      \draw[dashed] (2,0,0) -- (2,0,1) -- (0,0,1);
+      \draw[dashed] (2,0,0) -- (2,3,0);
+      \draw[dashed] (2,0,1) -- (2,3,1);
+      \draw[dashed] (0,0,1) -- (0,3,1);
+    \end{tikzpicture}
+    \caption{ベクトル}
+\end{minipage}
+\end{figure}
+
+\end{document}
